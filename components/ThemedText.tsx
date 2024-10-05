@@ -1,31 +1,41 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text, type TextProps, StyleSheet } from "react-native";
 
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?:
+    | "default"
+    | "title"
+    | "defaultSemiBold"
+    | "subtitle"
+    | "link"
+    | "normal"
+    | "medium";
 };
 
 export function ThemedText({
   style,
   lightColor,
   darkColor,
-  type = 'default',
+  type = "default",
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   return (
     <Text
       style={[
         { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
+        type === "default" ? styles.default : undefined,
+        type === "title" ? styles.title : undefined,
+        type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
+        type === "subtitle" ? styles.subtitle : undefined,
+        type === "link" ? styles.link : undefined,
+        type === "medium" ? styles.medium : undefined,
+        type === "normal" ? styles.medium : undefined,
         style,
       ]}
       {...rest}
@@ -35,26 +45,38 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
+    fontSize: RFValue(12),
     lineHeight: 24,
+    fontFamily: "Poppins_400Regular",
+  },
+  medium: {
+    fontSize: RFValue(14),
+    lineHeight: 24,
+    fontFamily: "Poppins_500Medium",
   },
   defaultSemiBold: {
-    fontSize: 16,
+    fontSize: RFValue(14),
     lineHeight: 24,
-    fontWeight: '600',
+    fontFamily: "Poppins_600SemiBold",
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    fontSize: RFValue(18),
+    fontFamily: "Poppins_700Bold",
+    lineHeight: 32,
+  },
+  normal: {
+    fontSize: RFValue(16),
+    fontFamily: "Poppins_700Bold",
     lineHeight: 32,
   },
   subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: RFValue(12),
+    fontFamily: "Poppins_500Medium",
   },
   link: {
     lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
+    fontSize: RFValue(12),
+    fontFamily: "Poppins_400Regular",
+    color: "#0a7ea4",
   },
 });
